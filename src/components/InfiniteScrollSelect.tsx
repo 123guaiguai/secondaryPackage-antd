@@ -1,15 +1,13 @@
 import React, { FC, useEffect, useState } from 'react'
 import styles from '../styles/select.module.less'
 import { getSearchRes } from '../service/api'
-import { request } from '../service'
-import createLoading from '../service/createLoading'
 
 interface IProps{
   wrapHeight?:number,
   itemHeight?:number
 }
 
-interface IItem{
+export interface IItem{
   name:string
 }
 
@@ -17,7 +15,7 @@ const InfiniteScrollSelect:FC<IProps>=({wrapHeight=300,itemHeight=20})=> {
 
   const [list,setList]=useState<IItem[]>([])
   const getListData=async()=>{
-    const {data}=await request(getSearchRes)
+    let data=await getSearchRes() as IItem[]
     setList(data)
   }
   useEffect(()=>{
