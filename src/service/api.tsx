@@ -1,6 +1,6 @@
-import service from "./index"
+import {request} from "./index"
 export function getSearchRes(){
-    return service({
+    return request({
         method:"get",
         url:"/testNode",
         params:{
