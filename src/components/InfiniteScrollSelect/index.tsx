@@ -1,12 +1,13 @@
 import React, { FC, UIEventHandler, useEffect, useMemo, useRef, useState } from 'react'
 import styles from '../../styles/select.module.less'
 import { getSearchRes } from '../../service/api'
+import { useDebounceFn } from '../../hooks/useDebounce'
 
 interface IProps{
   wrapHeight?:number,
   itemHeight?:number,
   list:IItem[],
-  onBottomingOut: Function
+  onBottomingOut: (...args:any[])=>any
 }
 
 export interface IItem{
@@ -18,13 +19,14 @@ const InfiniteScrollSelect:FC<IProps>=({wrapHeight=300,itemHeight=30,list,onBott
   const [beginIndex,setBeginIndex]=useState(0)
   const [endIndex,setEndIndex]=useState(0)
   const [maxVolume,setMaxVolume]=useState(0)
+  const {run:debounceBottomingOut}=useDebounceFn(onBottomingOut,{wait:500})
 
   const handleScroll: UIEventHandler= async (event)=>{
     const target = event.target as HTMLElement;
     const maxScrollHeight = target.scrollHeight - target.clientHeight;
     //触底追加数据
     if(target.scrollTop >= maxScrollHeight){
-      onBottomingOut?.()
+      debounceBottomingOut?.()
     }
     setBeginIndex(Math.floor(Math.min(target.scrollTop,maxScrollHeight)/itemHeight))
   }
