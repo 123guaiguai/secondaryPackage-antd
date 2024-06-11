@@ -1,6 +1,8 @@
-import React, { FC, useRef } from 'react';
+import React, { FC, useEffect, useRef, useState } from 'react';
 import {SearchForm,InfiniteScrollSelect} from './components/index';
 import { FormInstance, Input, Radio } from 'antd';
+import { getSearchRes } from './service/api';
+import { IItem } from './components/InfiniteScrollSelect';
 
 interface IFormInput{
   status: string;
@@ -28,6 +30,11 @@ const RadioTag:FC<{options: IOption[]}> = ({ options }) => {
 };
 
 const App = () => {
+  const page=useRef({
+    pagination: 0,
+    pageSize: 20,
+  },)
+  const [list,setList]=useState<IItem[]>([])
 
   const onValuesChange = (changedValues: IFormInput, allValues:IFormInput) => {
     console.log('Values changed:', changedValues, allValues);
@@ -41,6 +48,22 @@ const App = () => {
   const onReset = (values: IFormInput, formIns: FormInstance) => {
     console.log('onReset', values, formIns);
   };
+
+  const getListData=async()=>{
+    let data=await getSearchRes(page.current) as IItem[]
+    page.current.pagination+=1
+    setList(data)
+  }
+
+  const appendListData=async ()=>{
+    const data=await getSearchRes(page.current) as IItem[]
+    setList(list=>[...list,...data])
+    page.current.pagination+=1
+  }
+
+  useEffect(()=>{
+    getListData()
+  },[])
 
   return (
     <div>
@@ -75,7 +98,7 @@ const App = () => {
         />
       </SearchForm.Item>
       </SearchForm> */}
-      <InfiniteScrollSelect/>
+      <InfiniteScrollSelect list={list} onBottomingOut={appendListData}/>
     </div>
     
   );
