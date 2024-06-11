@@ -21,7 +21,7 @@ export default function useSize(refTarget:RefObject<HTMLElement>):Size|undefined
     const resizeObserver=new ResizeObserver((entries)=>{
         for(let entry of entries){
             const {clientWidth,clientHeight}=entry.target
-            setSize({width:clientWidth,height:clientWidth})
+            setSize({width:clientWidth,height:clientHeight})
         }
     })
     resizeObserver.observe(refTarget.current!)

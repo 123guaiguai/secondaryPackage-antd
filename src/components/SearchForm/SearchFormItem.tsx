@@ -1,7 +1,7 @@
 import { FC, FormEvent, PropsWithChildren, useContext } from 'react';
 import { Form, Input } from 'antd';
-import { formContext } from './SearchForm';
-import styles from "../styles/form.module.less"
+import { formContext } from '.';
+import styles from "../../styles/form.module.less"
 
 export type SearchFormItemProps={
     name: string;
