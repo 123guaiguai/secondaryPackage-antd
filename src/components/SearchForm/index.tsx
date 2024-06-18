@@ -1,7 +1,7 @@
 import React, { PropsWithChildren, createContext } from "react";
 import { Form, Button, FormInstance } from 'antd';
 import { FC } from 'react';
-import styles from "../styles/form.module.less"
+import styles from "../../styles/form.module.less"
 
 type SearchFormProps = {
   onValuesChange: any;

@@ -12,8 +12,11 @@
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "@types/lodash-es": "^4.17.12",
     "antd": "^5.17.3",
     "axios": "^1.7.2",
+    "classnames": "^2.5.1",
+    "lodash-es": "^4.17.21",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
     "resize-observer-polyfill": "^1.5.1"
